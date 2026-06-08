@@ -1,0 +1,176 @@
+:root{
+    --green:#16a34a;
+    --green-dark:#15803d;
+    --green-soft:#ecfdf5;
+    --bg:#f4f7f6;
+    --white:#ffffff;
+    --text:#1f2937;
+    --muted:#6b7280;
+    --border:#e5e7eb;
+    --danger:#ef4444;
+    --warning:#f59e0b;
+    --blue:#2563eb;
+    --shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+body{
+    background:linear-gradient(135deg,#f4f7f6,#eefdf3);
+    color:var(--text);
+}
+
+/* Sidebar */
+.sidebar{
+    background:linear-gradient(180deg,#16a34a,#15803d) !important;
+    box-shadow:6px 0 25px rgba(22,163,74,.25);
+}
+
+.logo{
+    background:rgba(255,255,255,.12);
+    padding:18px;
+    border-radius:18px;
+}
+
+.sidebar a{
+    display:flex !important;
+    align-items:center;
+    gap:10px;
+    font-weight:600;
+}
+
+.sidebar a:hover,
+.sidebar a.active{
+    transform:translateX(4px);
+}
+
+/* Main cards */
+.topbar,
+.card,
+.section,
+.stat{
+    background:rgba(255,255,255,.95) !important;
+    border:1px solid rgba(255,255,255,.8);
+    box-shadow:var(--shadow) !important;
+}
+
+.topbar{
+    border-left:6px solid var(--green);
+}
+
+.topbar h1{
+    font-size:28px;
+}
+
+/* Cards */
+.card,
+.section,
+.stat{
+    transition:.25s ease;
+}
+
+.card:hover,
+.section:hover,
+.stat:hover{
+    transform:translateY(-3px);
+}
+
+.card h2,
+.section h2,
+.stat h3{
+    color:var(--green) !important;
+}
+
+/* Inputs */
+input,
+select,
+textarea{
+    border:1px solid var(--border) !important;
+    background:#fbfbfb;
+    transition:.2s;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+    outline:none;
+    border-color:var(--green) !important;
+    box-shadow:0 0 0 3px rgba(22,163,74,.15);
+    background:white;
+}
+
+/* Buttons */
+button,
+.quick-actions a{
+    transition:.2s ease;
+    font-weight:700;
+}
+
+button:hover,
+.quick-actions a:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 18px rgba(22,163,74,.25);
+}
+
+/* Tables */
+table{
+    border-radius:14px;
+    overflow:hidden;
+}
+
+th{
+    background:linear-gradient(135deg,#16a34a,#15803d) !important;
+}
+
+tr:hover{
+    background:#f0fdf4;
+}
+
+/* Status */
+.status-good,
+.good{
+    color:#15803d !important;
+}
+
+.status-low{
+    color:#f59e0b !important;
+}
+
+.status-out,
+.low{
+    color:#dc2626 !important;
+}
+
+/* Report design */
+.report-card{
+    background:linear-gradient(180deg,#ffffff,#f8fffb) !important;
+    border:1px solid #dcfce7;
+}
+
+.report-box{
+    box-shadow:0 5px 15px rgba(22,163,74,.08);
+}
+
+/* Mobile */
+@media(max-width:700px){
+    .sidebar{
+        border-radius:0 0 20px 20px;
+    }
+
+    .logo{
+        margin-bottom:15px;
+    }
+
+    .sidebar a{
+        background:rgba(255,255,255,.12);
+        margin-bottom:8px;
+    }
+
+    .topbar h1{
+        font-size:24px;
+    }
+
+    .card:hover,
+    .section:hover,
+    .stat:hover{
+        transform:none;
+    }
+}

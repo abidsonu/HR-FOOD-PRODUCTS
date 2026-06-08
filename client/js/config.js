@@ -1,0 +1,1 @@
+const API_URL = "https://hr-food-products.onrender.com/api";

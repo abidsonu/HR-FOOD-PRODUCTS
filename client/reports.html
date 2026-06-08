@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="css/responsive.css">
+<title>HR FOOD PRODUCTS - Reports</title>
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#f5f7fa;color:#1f2937}
+
+.sidebar{
+position:fixed;left:0;top:0;width:260px;height:100vh;
+background:#16a34a;padding:20px
+}
+
+.logo{text-align:center;color:white;margin-bottom:30px}
+
+.sidebar a{
+display:block;color:white;text-decoration:none;padding:14px;
+border-radius:10px;margin-bottom:8px
+}
+
+.sidebar a:hover,.sidebar a.active{
+background:white;color:#16a34a;font-weight:bold
+}
+
+.main{margin-left:280px;padding:20px}
+
+.topbar{
+background:white;padding:20px;border-radius:15px;
+box-shadow:0 2px 10px rgba(0,0,0,.08);
+margin-bottom:20px
+}
+
+.topbar h1{color:#16a34a}
+
+.btn-row{
+display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px
+}
+
+button{
+border:none;border-radius:8px;padding:12px 16px;
+cursor:pointer;color:white;font-weight:bold
+}
+
+.green{background:#16a34a}
+.blue{background:#2563eb}
+.red{background:#dc2626}
+.whatsapp{background:#25D366}
+
+.cards{
+display:grid;grid-template-columns:repeat(4,1fr);
+gap:20px;margin-bottom:20px
+}
+
+.card{
+background:white;padding:20px;border-radius:15px;
+box-shadow:0 2px 10px rgba(0,0,0,.08);
+text-align:center
+}
+
+.card h3{color:#16a34a;margin-bottom:10px}
+
+.section{
+background:white;padding:20px;border-radius:15px;
+box-shadow:0 2px 10px rgba(0,0,0,.08);
+margin-bottom:20px
+}
+
+.section h2{color:#16a34a;margin-bottom:15px}
+
+.report-card{
+background:white;
+border-radius:16px;
+padding:25px;
+border-top:6px solid #16a34a;
+box-shadow:0 4px 14px rgba(0,0,0,.08);
+}
+
+.report-header{
+text-align:center;
+padding-bottom:18px;
+border-bottom:2px solid #e5e7eb;
+margin-bottom:20px;
+}
+
+.report-header h1{
+color:#16a34a;
+font-size:30px;
+margin-bottom:5px;
+}
+
+.report-header h2{
+color:#111827;
+font-size:20px;
+margin-bottom:8px;
+}
+
+.report-header p{
+color:#6b7280;
+}
+
+.report-grid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:15px;
+margin:20px 0;
+}
+
+.report-box{
+background:#f0fdf4;
+padding:18px;
+border-radius:12px;
+text-align:center;
+border:1px solid #bbf7d0;
+}
+
+.report-box h3{
+color:#15803d;
+font-size:14px;
+margin-bottom:8px;
+}
+
+.report-box h2{
+font-size:24px;
+color:#111827;
+}
+
+.report-section{
+margin-top:25px;
+}
+
+.report-section h3{
+color:#16a34a;
+margin-bottom:12px;
+padding-bottom:8px;
+border-bottom:1px solid #e5e7eb;
+}
+
+.report-item{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:10px;
+background:#f9fafb;
+padding:12px 14px;
+border-radius:10px;
+margin-bottom:8px;
+border-left:4px solid #16a34a;
+}
+
+.report-item span{
+font-weight:bold;
+}
+
+.low-stock{
+background:#fef2f2;
+border-left:4px solid #dc2626;
+}
+
+.good-stock{
+background:#f0fdf4;
+border-left:4px solid #16a34a;
+}
+
+table{width:100%;border-collapse:collapse}
+th{background:#16a34a;color:white;padding:12px}
+td{padding:10px;border-bottom:1px solid #eee;text-align:center}
+
+@media(max-width:900px){
+.sidebar{position:relative;width:100%;height:auto}
+.main{margin-left:0}
+.cards,.report-grid{grid-template-columns:1fr}
+}
+
+@media print{
+.sidebar,.topbar,.btn-row,.cards,.section:not(.print-section){
+display:none;
+}
+
+.main{
+margin-left:0;
+padding:0;
+}
+
+body{
+background:white;
+}
+
+.report-card{
+box-shadow:none;
+border-top:6px solid #16a34a;
+}
+}
+</style>
+</head>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+
+    const userRole = localStorage.getItem("userRole") || "staff";
+
+    const adminOnlyItems = document.querySelectorAll(".adminOnly");
+    const managerOnlyItems = document.querySelectorAll(".managerOnly");
+
+    adminOnlyItems.forEach(function(item){
+        if(userRole !== "admin"){
+            item.remove();
+        }
+    });
+
+    managerOnlyItems.forEach(function(item){
+        if(userRole !== "admin" && userRole !== "manager"){
+            item.remove();
+        }
+    });
+
+});
+</script>
+<body>
+
+<div class="sidebar">
+
+<div class="logo">
+<h2>HR FOOD</h2>
+<p>PRODUCTS</p>
+</div>
+<a href="dashboard.html" class="navLink">📊 Dashboard</a>
+
+<a href="products.html" class="navLink">📦 Products</a>
+
+<a href="sales.html" class="navLink">🛒 Sales</a>
+
+<a href="restock.html" class="navLink managerOnly">📥 Restock</a>
+
+<a href="analytics.html" class="navLink adminOnly">📈 Analytics</a>
+
+<a href="reports.html" class="navLink">📄 Reports</a>
+
+<a href="settings.html" class="navLink adminOnly">⚙️ Settings</a>
+
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+
+    const userRole =
+    localStorage.getItem("userRole") || "staff";
+
+    if(userRole === "staff"){
+
+        const adminLinks =
+        document.querySelectorAll(".adminOnly");
+
+        const managerLinks =
+        document.querySelectorAll(".managerOnly");
+
+        adminLinks.forEach(function(el){
+            el.style.display = "none";
+        });
+
+        managerLinks.forEach(function(el){
+            el.style.display = "none";
+        });
+
+    }
+
+});
+</script>
+<script>
+const role = localStorage.getItem("userRole") || "staff";
+
+document.addEventListener("DOMContentLoaded", () => {
+    if(role === "staff"){
+        document.querySelectorAll(".adminOnly").forEach(item=>{
+            item.style.display = "none";
+        });
+
+        document.querySelectorAll(".managerOnly").forEach(item=>{
+            item.style.display = "none";
+        });
+    }
+});
+</script>
+<div class="main">
+
+<div class="topbar">
+<h1>Reports</h1>
+<p>Professional daily and total business reports</p>
+</div>
+
+<div class="btn-row">
+<button class="green" onclick="generateTodayReport()">Today Report</button>
+<button class="blue" onclick="generateTotalReport()">Total Report</button>
+<button class="whatsapp" onclick="sendWhatsApp()">WhatsApp Report</button>
+<button class="blue" onclick="window.print()">Print Report</button>
+<button class="red" onclick="downloadReport()">Download TXT</button>
+</div>
+
+<h2 style="color:#16a34a;margin-bottom:15px;">Today Summary</h2>
+
+<div class="cards">
+
+<div class="card">
+<h3>Today Orders</h3>
+<h2 id="todayOrders">0</h2>
+</div>
+
+<div class="card">
+<h3>Today Products Sold</h3>
+<h2 id="todayQty">0</h2>
+</div>
+
+<div class="card">
+<h3>Today Sales</h3>
+<h2 id="todaySales">₹0</h2>
+</div>
+
+<div class="card">
+<h3>Low Stock</h3>
+<h2 id="lowStock">0</h2>
+</div>
+
+</div>
+
+<h2 style="color:#16a34a;margin-bottom:15px;">Total Summary</h2>
+
+<div class="cards">
+
+<div class="card">
+<h3>Total Products</h3>
+<h2 id="totalProducts">0</h2>
+</div>
+
+<div class="card">
+<h3>Total Stock</h3>
+<h2 id="totalStock">0</h2>
+</div>
+
+<div class="card">
+<h3>Total Orders</h3>
+<h2 id="totalOrders">0</h2>
+</div>
+
+<div class="card">
+<h3>Total Sales</h3>
+<h2 id="totalSales">₹0</h2>
+</div>
+
+</div>
+
+<div class="section print-section">
+<h2>Selected Report</h2>
+<div id="reportArea" class="report-card">
+Loading report...
+</div>
+</div>
+
+<div class="section">
+<h2>Today Sales History</h2>
+
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Product</th>
+<th>Qty</th>
+<th>Amount</th>
+<th>Time</th>
+</tr>
+</thead>
+
+<tbody id="todaySalesTable"></tbody>
+</table>
+</div>
+
+<div class="section">
+<h2>Total Stock Report</h2>
+
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Product</th>
+<th>Category</th>
+<th>Stock</th>
+<th>Minimum</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody id="stockTable"></tbody>
+</table>
+</div>
+
+</div>
+
+<script src="js/config.js"></script>
+
+<script>
+if(!localStorage.getItem("token")){
+window.location.href = "login.html";
+}
+
+let allProducts = [];
+let allSales = [];
+let todaySalesList = [];
+let selectedReportText = "";
+
+function isToday(dateValue){
+const d = new Date(dateValue);
+const today = new Date();
+
+return d.getDate() === today.getDate() &&
+d.getMonth() === today.getMonth() &&
+d.getFullYear() === today.getFullYear();
+}
+
+async function loadData(){
+
+try{
+
+const productsRes = await fetch(`${API_URL}/products`);
+allProducts = await productsRes.json();
+
+const salesRes = await fetch(`${API_URL}/sales`);
+allSales = await salesRes.json();
+
+todaySalesList = allSales.filter(sale => isToday(sale.saleDate));
+
+updateSummary();
+showTodaySalesTable();
+showStockTable();
+generateTodayReport();
+
+}catch(error){
+console.error(error);
+alert("Backend not connected. Start server using node server.js");
+}
+
+}
+
+function updateSummary(){
+
+let todayOrders = todaySalesList.length;
+let todayQty = 0;
+let todayRevenue = 0;
+
+let totalOrders = allSales.length;
+let totalRevenue = 0;
+let totalStock = 0;
+
+todaySalesList.forEach(sale=>{
+todayQty += Number(sale.quantity);
+todayRevenue += Number(sale.amount);
+});
+
+allSales.forEach(sale=>{
+totalRevenue += Number(sale.amount);
+});
+
+allProducts.forEach(product=>{
+totalStock += Number(product.stock);
+});
+
+const lowProducts = allProducts.filter(
+product => Number(product.stock) <= Number(product.minStock)
+);
+
+document.getElementById("todayOrders").innerText = todayOrders;
+document.getElementById("todayQty").innerText = todayQty;
+document.getElementById("todaySales").innerText = "₹" + todayRevenue;
+document.getElementById("lowStock").innerText = lowProducts.length;
+
+document.getElementById("totalProducts").innerText = allProducts.length;
+document.getElementById("totalStock").innerText = totalStock;
+document.getElementById("totalOrders").innerText = totalOrders;
+document.getElementById("totalSales").innerText = "₹" + totalRevenue;
+}
+
+function showTodaySalesTable(){
+
+const table = document.getElementById("todaySalesTable");
+table.innerHTML = "";
+
+if(todaySalesList.length === 0){
+table.innerHTML = `
+<tr>
+<td colspan="5">No sales today</td>
+</tr>
+`;
+return;
+}
+
+todaySalesList.forEach(sale=>{
+table.innerHTML += `
+<tr>
+<td>${sale.id}</td>
+<td>${sale.productName}</td>
+<td>${sale.quantity}</td>
+<td>₹${sale.amount}</td>
+<td>${new Date(sale.saleDate).toLocaleTimeString()}</td>
+</tr>
+`;
+});
+}
+
+function showStockTable(){
+
+const table = document.getElementById("stockTable");
+table.innerHTML = "";
+
+allProducts.forEach(product=>{
+
+let status = "Available";
+
+if(Number(product.stock) <= 0){
+status = "Out of Stock";
+}
+else if(Number(product.stock) <= Number(product.minStock)){
+status = "Low Stock";
+}
+
+table.innerHTML += `
+<tr>
+    <td data-label="ID">${product.id}</td>
+    <td data-label="Product">${product.name}</td>
+    <td data-label="Category">${product.category}</td>
+    <td data-label="Stock">${product.stock}</td>
+    <td data-label="Minimum">${product.minStock}</td>
+    <td data-label="Status">${status}</td>
+</tr>
+`;
+});
+}
+
+function generateTodayReport(){
+
+let todayRevenue = 0;
+let todayQty = 0;
+const productSales = {};
+
+todaySalesList.forEach(sale=>{
+
+todayRevenue += Number(sale.amount);
+todayQty += Number(sale.quantity);
+
+if(!productSales[sale.productName]){
+productSales[sale.productName] = {
+qty:0,
+amount:0
+};
+}
+
+productSales[sale.productName].qty += Number(sale.quantity);
+productSales[sale.productName].amount += Number(sale.amount);
+
+});
+
+const lowProducts = allProducts.filter(
+product => Number(product.stock) <= Number(product.minStock)
+);
+
+let html = `
+<div class="report-header">
+<h1>HR FOOD PRODUCTS</h1>
+<h2>Today Sales Report</h2>
+<p>${new Date().toLocaleDateString()} | ${new Date().toLocaleTimeString()}</p>
+</div>
+
+<div class="report-grid">
+
+<div class="report-box">
+<h3>Total Sales Amount</h3>
+<h2>₹${todayRevenue}</h2>
+</div>
+
+<div class="report-box">
+<h3>Total Orders</h3>
+<h2>${todaySalesList.length}</h2>
+</div>
+
+<div class="report-box">
+<h3>Products Sold</h3>
+<h2>${todayQty}</h2>
+</div>
+
+<div class="report-box">
+<h3>Low Stock</h3>
+<h2>${lowProducts.length}</h2>
+</div>
+
+</div>
+
+<div class="report-section">
+<h3>Product Wise Sales</h3>
+`;
+
+let text = "";
+
+text += "🟢 HR FOOD PRODUCTS\n";
+text += "📅 TODAY SALES REPORT\n";
+text += "━━━━━━━━━━━━━━━━━━━━\n\n";
+
+text += "Date: " + new Date().toLocaleDateString() + "\n";
+text += "Time: " + new Date().toLocaleTimeString() + "\n\n";
+
+text += "📊 TODAY SUMMARY\n";
+text += "━━━━━━━━━━━━━━━━━━━━\n";
+text += "Total Sales Amount: ₹" + todayRevenue + "\n";
+text += "Total Orders: " + todaySalesList.length + "\n";
+text += "Total Products Sold: " + todayQty + "\n";
+text += "Low Stock Items: " + lowProducts.length + "\n\n";
+
+text += "📦 PRODUCT WISE SALES\n";
+text += "━━━━━━━━━━━━━━━━━━━━\n";
+
+if(Object.keys(productSales).length === 0){
+
+html += `
+<div class="report-item good-stock">
+<strong>No sales today</strong>
+<span>₹0</span>
+</div>
+`;
+
+text += "No sales today.\n";
+
+}else{
+
+Object.entries(productSales).forEach(([product, data])=>{
+
+html += `
+<div class="report-item">
+<strong>${product}</strong>
+<span>${data.qty} units | ₹${data.amount}</span>
+</div>
+`;
+
+text += product + "\n";
+text += "Qty: " + data.qty + " | Amount: ₹" + data.amount + "\n\n";
+
+});
+
+}
+
+html += `
+</div>
+
+<div class="report-section">
+<h3>Sale Entries</h3>
+`;
+
+text += "🧾 SALE ENTRIES\n";
+text += "━━━━━━━━━━━━━━━━━━━━\n";
+
+if(todaySalesList.length === 0){
+
+html += `
+<div class="report-item good-stock">
+<strong>No sale entries today</strong>
+<span>0</span>
+</div>
+`;
+
+text += "No sale entries today.\n";
+
+}else{
+
+todaySalesList.forEach(sale=>{
+
+html += `
+<div class="report-item">
+<strong>${sale.productName}</strong>
+<span>Qty ${sale.quantity} | ₹${sale.amount}</span>
+</div>
+`;
+
+text += sale.productName + "\n";
+text += "Qty: " + sale.quantity + " | Amount: ₹" + sale.amount + "\n\n";
+
+});
+
+}
+
+html += `
+</div>
+
+<div class="report-section">
+<h3>Low Stock Alerts</h3>
+`;
+
+text += "⚠️ LOW STOCK ALERTS\n";
+text += "━━━━━━━━━━━━━━━━━━━━\n";
+
+if(lowProducts.length === 0){
+
+html += `
+<div class="report-item good-stock">
+<strong>All products have sufficient stock</strong>
+<span>OK</span>
+</div>
+`;
+
+text += "All products have sufficient stock.\n";
+
+}else{
+
+lowProducts.forEach(product=>{
+
+html += `
+<div class="report-item low-stock">
+<strong>${product.name}</strong>
+<span>${product.stock} left</span>
+</div>
+`;
+
+text += product.name + " - " + product.stock + " left\n";
+
+});
+
+}
+
+html += `
+</div>
+
+<div class="report-section">
+<h3>Generated By</h3>
+<div class="report-item">
+<strong>HR FOOD PRODUCTS Inventory System</strong>
+<span>Official Report</span>
+</div>
+</div>
+`;
+
+text += "\n━━━━━━━━━━━━━━━━━━━━\n";
+text += "Generated by HR FOOD PRODUCTS System";
+
+selectedReportText = text;
+
+document.getElementById("reportArea").innerHTML = html;
+
+}
+function generateTotalReport(){
+
+let totalRevenue = 0;
+let totalQty = 0;
+let totalStock = 0;
+
+const productSales = {};
+
+allSales.forEach(sale=>{
+
+totalRevenue += Number(sale.amount);
+totalQty += Number(sale.quantity);
+
+if(!productSales[sale.productName]){
+productSales[sale.productName] = {
+qty:0,
+amount:0
+};
+}
+
+productSales[sale.productName].qty += Number(sale.quantity);
+productSales[sale.productName].amount += Number(sale.amount);
+
+});
+
+allProducts.forEach(product=>{
+totalStock += Number(product.stock);
+});
+
+const lowProducts = allProducts.filter(
+product => Number(product.stock) <= Number(product.minStock)
+);
+
+let html = `
+<div class="report-header">
+<h1>HR FOOD PRODUCTS</h1>
+<h2>Total Business Report</h2>
+<p>${new Date().toLocaleDateString()} | ${new Date().toLocaleTimeString()}</p>
+</div>
+
+<div class="report-grid">
+
+<div class="report-box">
+<h3>Total Sales Amount</h3>
+<h2>₹${totalRevenue}</h2>
+</div>
+
+<div class="report-box">
+<h3>Total Orders</h3>
+<h2>${allSales.length}</h2>
+</div>
+
+<div class="report-box">
+<h3>Total Products Sold</h3>
+<h2>${totalQty}</h2>
+</div>
+
+<div class="report-box">
+<h3>Total Stock</h3>
+<h2>${totalStock}</h2>
+</div>
+
+</div>
+
+<div class="report-section">
+<h3>Total Product Wise Sales</h3>
+`;
+
+let text = "";
+
+text += "🟢 HR FOOD PRODUCTS\n";
+text += "📊 TOTAL BUSINESS REPORT\n";
+text += "━━━━━━━━━━━━━━━━━━━━\n\n";
+
+text += "Date: " + new Date().toLocaleDateString() + "\n";
+text += "Time: " + new Date().toLocaleTimeString() + "\n\n";
+
+text += "📊 TOTAL SUMMARY\n";
+text += "━━━━━━━━━━━━━━━━━━━━\n";
+text += "Total Sales Amount: ₹" + totalRevenue + "\n";
+text += "Total Orders: " + allSales.length + "\n";
+text += "Total Products Sold: " + totalQty + "\n";
+text += "Total Products: " + allProducts.length + "\n";
+text += "Total Stock: " + totalStock + "\n";
+text += "Low Stock Items: " + lowProducts.length + "\n\n";
+
+text += "📦 PRODUCT WISE SALES\n";
+text += "━━━━━━━━━━━━━━━━━━━━\n";
+
+if(Object.keys(productSales).length === 0){
+
+html += `
+<div class="report-item good-stock">
+<strong>No sales recorded</strong>
+<span>₹0</span>
+</div>
+`;
+
+text += "No sales recorded.\n";
+
+}else{
+
+Object.entries(productSales).forEach(([product, data])=>{
+
+html += `
+<div class="report-item">
+<strong>${product}</strong>
+<span>${data.qty} units | ₹${data.amount}</span>
+</div>
+`;
+
+text += product + "\n";
+text += "Qty: " + data.qty + " | Amount: ₹" + data.amount + "\n\n";
+
+});
+
+}
+
+html += `
+</div>
+
+<div class="report-section">
+<h3>Current Stock</h3>
+`;
+
+text += "📦 CURRENT STOCK\n";
+text += "━━━━━━━━━━━━━━━━━━━━\n";
+
+allProducts.forEach(product=>{
+
+html += `
+<div class="report-item">
+<strong>${product.name}</strong>
+<span>${product.stock} stock</span>
+</div>
+`;
+
+text += product.name + " - Stock: " + product.stock + "\n";
+
+});
+
+html += `
+</div>
+
+<div class="report-section">
+<h3>Generated By</h3>
+<div class="report-item">
+<strong>HR FOOD PRODUCTS Inventory System</strong>
+<span>Official Report</span>
+</div>
+</div>
+`;
+
+text += "\n━━━━━━━━━━━━━━━━━━━━\n";
+text += "Generated by HR FOOD PRODUCTS System";
+
+selectedReportText = text;
+
+document.getElementById("reportArea").innerHTML = html;
+
+}
+function sendWhatsApp(){
+
+if(!selectedReportText.trim()){
+alert("Generate report first");
+return;
+}
+
+const settings = JSON.parse(localStorage.getItem("appSettings"));
+const phone = settings?.whatsapp?.number || prompt("Enter WhatsApp number with country code");
+
+if(!phone){
+return;
+}
+
+window.open(
+`https://wa.me/${phone}?text=${encodeURIComponent(selectedReportText)}`,
+"_blank"
+);
+}
+
+function downloadReport(){
+
+if(!selectedReportText.trim()){
+alert("Generate report first");
+return;
+}
+
+const blob = new Blob([selectedReportText], {
+type:"text/plain"
+});
+
+const link = document.createElement("a");
+link.href = URL.createObjectURL(blob);
+link.download = "HR_FOOD_PRODUCTS_Report.txt";
+link.click();
+}
+
+loadData();
+</script>
+
+</body>
+</html>
