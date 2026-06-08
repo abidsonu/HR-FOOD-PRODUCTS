@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>HR FOOD PRODUCTS - Settings</title>
+<link rel="stylesheet" href="css/responsive.css">
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#f5f7fa;
+color:#1f2937;
+}
+
+.sidebar{
+position:fixed;
+left:0;
+top:0;
+width:260px;
+height:100vh;
+background:#16a34a;
+padding:20px;
+}
+
+.logo{
+text-align:center;
+color:white;
+margin-bottom:30px;
+}
+
+.sidebar a{
+display:block;
+padding:14px;
+color:white;
+text-decoration:none;
+border-radius:10px;
+margin-bottom:8px;
+}
+
+.sidebar a:hover,
+.sidebar a.active{
+background:white;
+color:#16a34a;
+font-weight:bold;
+}
+
+.main{
+margin-left:280px;
+padding:20px;
+}
+
+.topbar{
+background:white;
+padding:20px;
+border-radius:15px;
+box-shadow:0 2px 10px rgba(0,0,0,.08);
+margin-bottom:20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.topbar h1{
+color:#16a34a;
+}
+
+.adminBox{
+text-align:right;
+}
+
+.logoutBtn{
+background:#dc2626;
+color:white;
+border:none;
+padding:10px 15px;
+border-radius:8px;
+cursor:pointer;
+margin-top:8px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+}
+
+.card{
+background:white;
+padding:20px;
+border-radius:15px;
+box-shadow:0 2px 10px rgba(0,0,0,.08);
+margin-bottom:20px;
+}
+
+.card h2{
+color:#16a34a;
+margin-bottom:15px;
+}
+
+label{
+font-weight:bold;
+font-size:14px;
+display:block;
+margin-bottom:5px;
+}
+
+input,
+select,
+textarea{
+width:100%;
+padding:12px;
+border:1px solid #ddd;
+border-radius:8px;
+margin-bottom:12px;
+}
+
+textarea{
+height:90px;
+resize:none;
+}
+
+button{
+padding:12px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-weight:bold;
+}
+
+.saveBtn{
+background:#16a34a;
+color:white;
+width:100%;
+}
+
+.saveBtn:hover{
+background:#15803d;
+}
+
+.backupBtn{
+background:#2563eb;
+color:white;
+width:100%;
+margin-bottom:10px;
+}
+
+.resetBtn{
+background:#f59e0b;
+color:white;
+width:100%;
+}
+
+.info{
+background:#f0fdf4;
+padding:15px;
+border-radius:10px;
+line-height:1.8;
+}
+
+.preview{
+background:#f0fdf4;
+padding:15px;
+border-radius:10px;
+line-height:1.7;
+}
+
+@media(max-width:900px){
+.sidebar{
+position:relative;
+width:100%;
+height:auto;
+}
+
+.main{
+margin-left:0;
+}
+
+.grid{
+grid-template-columns:1fr;
+}
+
+.topbar{
+flex-direction:column;
+align-items:flex-start;
+}
+}
+</style>
+</head>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+
+    const userRole = localStorage.getItem("userRole") || "staff";
+
+    const adminOnlyItems = document.querySelectorAll(".adminOnly");
+    const managerOnlyItems = document.querySelectorAll(".managerOnly");
+
+    adminOnlyItems.forEach(function(item){
+        if(userRole !== "admin"){
+            item.remove();
+        }
+    });
+
+    managerOnlyItems.forEach(function(item){
+        if(userRole !== "admin" && userRole !== "manager"){
+            item.remove();
+        }
+    });
+
+});
+</script>
+<body>
+
+<div class="sidebar">
+
+<div class="logo">
+<h2 id="sideCompanyName">HR FOOD</h2>
+<p>PRODUCTS</p>
+</div>
+
+<a href="dashboard.html" class="navLink">📊 Dashboard</a>
+
+<a href="products.html" class="navLink">📦 Products</a>
+
+<a href="sales.html" class="navLink">🛒 Sales</a>
+
+<a href="restock.html" class="navLink managerOnly">📥 Restock</a>
+
+<a href="analytics.html" class="navLink adminOnly">📈 Analytics</a>
+
+<a href="reports.html" class="navLink">📄 Reports</a>
+
+<a href="settings.html" class="navLink adminOnly">⚙️ Settings</a>
+<a href="users.html">👥 Users</a>
+</div>
+
+<script>
+    
+const settingsRole = localStorage.getItem("userRole") || "staff";
+
+if(settingsRole !== "admin"){
+    alert("Access denied. Settings is only for admin.");
+    window.location.href = "dashboard.html";
+}
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+
+    const token = localStorage.getItem("token");
+    const role = localStorage.getItem("userRole");
+
+    if(!token){
+        window.location.href = "login.html";
+        return;
+    }
+
+    if(role !== "admin"){
+        alert("Access Denied");
+        window.location.href = "dashboard.html";
+        return;
+    }
+
+});
+</script>
+
+<script>
+
+function logout(){
+
+    if(confirm("Logout?")){
+
+        localStorage.clear();
+
+        window.location.href = "login.html";
+
+    }
+
+}
+
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+
+    const userRole =
+    localStorage.getItem("userRole") || "staff";
+
+    if(userRole === "staff"){
+
+        const adminLinks =
+        document.querySelectorAll(".adminOnly");
+
+        const managerLinks =
+        document.querySelectorAll(".managerOnly");
+
+        adminLinks.forEach(function(el){
+            el.style.display = "none";
+        });
+
+        managerLinks.forEach(function(el){
+            el.style.display = "none";
+        });
+
+    }
+
+});
+</script>
+<script>
+const role = localStorage.getItem("userRole") || "staff";
+
+document.addEventListener("DOMContentLoaded", () => {
+    if(role === "staff"){
+        document.querySelectorAll(".adminOnly").forEach(item=>{
+            item.style.display = "none";
+        });
+
+        document.querySelectorAll(".managerOnly").forEach(item=>{
+            item.style.display = "none";
+        });
+    }
+});
+</script>
+<div class="main">
+
+<div class="topbar">
+
+<div>
+<h1>Settings</h1>
+<p>Manage company details, login info, reports and system preferences</p>
+</div>
+
+<div class="adminBox">
+<strong>Logged in as:</strong>
+<span id="adminName">Admin</span>
+<br>
+<button class="logoutBtn" onclick="logout()">
+<i class="fa-solid fa-right-from-bracket"></i>
+Logout
+</button>
+</div>
+
+</div>
+
+<div class="grid">
+
+<div>
+
+<div class="card">
+
+<h2>Company Information</h2>
+
+<label>Company Name</label>
+<input type="text" id="companyName" placeholder="HR FOOD PRODUCTS">
+
+<label>Owner Name</label>
+<input type="text" id="ownerName" placeholder="Owner Name">
+
+<label>Business Address</label>
+<textarea id="address" placeholder="Business Address"></textarea>
+
+<label>Email</label>
+<input type="email" id="email" placeholder="Email Address">
+
+<label>Phone Number</label>
+<input type="text" id="phone" placeholder="Phone Number">
+
+<button class="saveBtn" onclick="saveCompany()">
+Save Company Details
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>WhatsApp Report Settings</h2>
+
+<label>WhatsApp Number</label>
+<input type="text" id="whatsapp" placeholder="Example: 9188077501">
+
+<label>Default Report Message</label>
+<textarea id="defaultMessage" placeholder="Daily report from HR FOOD PRODUCTS"></textarea>
+
+<button class="saveBtn" onclick="saveWhatsapp()">
+Save WhatsApp Settings
+</button>
+
+</div>
+
+</div>
+
+<div>
+
+<div class="card">
+
+<h2>System Preferences</h2>
+
+<label>Currency</label>
+<select id="currency">
+<option value="₹">Indian Rupee ₹</option>
+<option value="$">US Dollar $</option>
+<option value="€">Euro €</option>
+</select>
+
+<label>Theme</label>
+<select id="theme">
+<option value="green">Green Theme</option>
+<option value="dark">Dark Theme</option>
+</select>
+
+<button class="saveBtn" onclick="saveSystem()">
+Save System Settings
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>Live Preview</h2>
+
+<div class="preview">
+
+<strong id="previewCompany">HR FOOD PRODUCTS</strong><br>
+<span id="previewOwner">Owner: Not set</span><br>
+<span id="previewPhone">Phone: Not set</span><br>
+<span id="previewEmail">Email: Not set</span><br>
+<span id="previewAddress">Address: Not set</span><br>
+<span id="previewCurrency">Currency: ₹</span>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Database Backup</h2>
+
+<button class="backupBtn" onclick="backupSettings()">
+Download Settings Backup
+</button>
+
+<button class="resetBtn" onclick="resetSettings()">
+Reset Settings
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>System Information</h2>
+
+<div class="info">
+<strong>Software:</strong> HR FOOD PRODUCTS ERP<br>
+<strong>Version:</strong> 1.0.0<br>
+<strong>Database:</strong> SQLite<br>
+<strong>Login:</strong> Enabled<br>
+<strong>Status:</strong> Running
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script src="js/auth.js"></script>
+
+<script>
+function defaultSettings(){
+return {
+company:{
+companyName:"HR FOOD PRODUCTS",
+ownerName:"",
+address:"Malappuram, Kerala, India",
+email:"hrfoodofficial@gmail.com",
+phone:"9188077501"
+},
+whatsapp:{
+number:"9188077501",
+message:"Daily business report from HR FOOD PRODUCTS"
+},
+system:{
+currency:"₹",
+theme:"green"
+}
+};
+}
+
+function getSettings(){
+const saved = localStorage.getItem("appSettings");
+
+if(saved){
+return JSON.parse(saved);
+}
+
+const data = defaultSettings();
+localStorage.setItem("appSettings", JSON.stringify(data));
+return data;
+}
+
+function saveSettings(data){
+localStorage.setItem("appSettings", JSON.stringify(data));
+applySettings();
+}
+
+function loadSettings(){
+const data = getSettings();
+
+document.getElementById("companyName").value = data.company.companyName || "";
+document.getElementById("ownerName").value = data.company.ownerName || "";
+document.getElementById("address").value = data.company.address || "";
+document.getElementById("email").value = data.company.email || "";
+document.getElementById("phone").value = data.company.phone || "";
+
+document.getElementById("whatsapp").value = data.whatsapp.number || "";
+document.getElementById("defaultMessage").value = data.whatsapp.message || "";
+
+document.getElementById("currency").value = data.system.currency || "₹";
+document.getElementById("theme").value = data.system.theme || "green";
+
+applySettings();
+}
+
+function applySettings(){
+const data = getSettings();
+
+document.getElementById("sideCompanyName").innerText =
+data.company.companyName || "HR FOOD";
+
+document.getElementById("previewCompany").innerText =
+data.company.companyName || "HR FOOD PRODUCTS";
+
+document.getElementById("previewOwner").innerText =
+"Owner: " + (data.company.ownerName || "Not set");
+
+document.getElementById("previewPhone").innerText =
+"Phone: " + (data.company.phone || "Not set");
+
+document.getElementById("previewEmail").innerText =
+"Email: " + (data.company.email || "Not set");
+
+document.getElementById("previewAddress").innerText =
+"Address: " + (data.company.address || "Not set");
+
+document.getElementById("previewCurrency").innerText =
+"Currency: " + (data.system.currency || "₹");
+}
+
+function saveCompany(){
+const data = getSettings();
+
+data.company.companyName = document.getElementById("companyName").value;
+data.company.ownerName = document.getElementById("ownerName").value;
+data.company.address = document.getElementById("address").value;
+data.company.email = document.getElementById("email").value;
+data.company.phone = document.getElementById("phone").value;
+
+saveSettings(data);
+
+alert("Company details updated successfully");
+}
+
+function saveWhatsapp(){
+const data = getSettings();
+
+data.whatsapp.number = document.getElementById("whatsapp").value;
+data.whatsapp.message = document.getElementById("defaultMessage").value;
+
+saveSettings(data);
+
+alert("WhatsApp settings updated successfully");
+}
+
+function saveSystem(){
+const data = getSettings();
+
+data.system.currency = document.getElementById("currency").value;
+data.system.theme = document.getElementById("theme").value;
+
+saveSettings(data);
+
+alert("System settings updated successfully");
+}
+
+function backupSettings(){
+const data = getSettings();
+
+const blob = new Blob(
+[JSON.stringify(data, null, 2)],
+{type:"application/json"}
+);
+
+const link = document.createElement("a");
+link.href = URL.createObjectURL(blob);
+link.download = "hr-food-settings-backup.json";
+link.click();
+}
+
+function resetSettings(){
+if(!confirm("Reset all settings?")){
+return;
+}
+
+localStorage.setItem(
+"appSettings",
+JSON.stringify(defaultSettings())
+);
+
+loadSettings();
+
+alert("Settings reset successfully");
+}
+
+loadSettings();
+</script>
+
+</body>
+</html>
